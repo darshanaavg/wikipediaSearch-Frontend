@@ -1,0 +1,96 @@
+<div class="container">
+    <div class="row">
+        <div class="col-4">
+            <form class="form">
+                <div class="input-group mb-3">
+                    {{input
+                        value=form.searchText
+                        name="title"
+                        class="form-control" 
+                        placeholder="Enter text"
+                        autocomplete='off'
+                    }}
+                    <button class="btn btn-outline-primary" type="button" {{action 'search'}}>Search</button>
+                </div>
+            </form>
+        </div>
+        {{#if started}}
+        <div class="col-2">
+            <button class="btn btn-primary" type="button" disabled>
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+
+            </button>
+        </div>
+
+        {{/if}}
+        <div class="col-2">Total Hits:
+            <span class="badge bg-primary rounded-pill">{{hitCount}}</span>
+        </div>
+    </div>
+
+    <table class="table table-hover">
+        <thead>
+            <tr class="d-flex">
+                <th class="col-2">Page Id</th>
+                <th class="col-7">Title</th>
+                <th class="col-3">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each model as |content|}}
+            <tr class="d-flex">
+                <td class="col-2">
+                    {{content.pageId}}
+
+                </td>
+                <td class="col-7">
+                    {{content.title}}
+                </td>
+                <td class="col-3">
+                    {{#link-to 'content' content.key content.pageId class="content"}}
+                    <button type="button" class="btn btn-outline-primary"
+                        {{ action 'showcontent' content.title content.content}}>View content
+                    </button>
+                    {{/link-to}}
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+        <tfoot>
+            <tr class="d-flex">
+                <td class="col-2"></td>
+                <td class="col-7"></td>
+                <td class="col-3">
+                    <nav>
+                        <ul class="pagination">
+                            <li class="page-item" {{action 'previousPage'}}><a class="page-link" href="#">Previous</a>
+                            </li>
+                            <li class="page-item" {{action 'nextPage'}}><a class="page-link" href="#">Next</a></li>
+                        </ul>
+                    </nav>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div class="modal fade" id="contentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
